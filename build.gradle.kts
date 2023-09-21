@@ -13,6 +13,13 @@ java {
 application {
     mainClass.set(project.property("mainClass") as String)
 }
+
+
+tasks.jar {
+    manifest {
+        attributes.set("Main-Class", project.property("mainClass") as String)
+    }
+}
 repositories {
     mavenCentral()
 }

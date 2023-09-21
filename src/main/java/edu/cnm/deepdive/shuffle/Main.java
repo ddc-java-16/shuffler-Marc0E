@@ -13,11 +13,16 @@ public class Main {
 
   public static void main(String[] args) {
 
-    int[] data = parseCommandLine(args); //TODO Change to parseInputStream();
-    System.out.println(Arrays.toString(data));
-    Shuffler shuffler = new Shuffler();
-    shuffler.shuffle(data);
-    System.out.println(Arrays.toString(data));
+    //int[] data = parseCommandLine(args); //TODO Change to parseInputStream();
+    try {
+    int[] data = parseStandardInput();
+      System.out.println(Arrays.toString(data));
+      Shuffler shuffler = new Shuffler();
+      shuffler.shuffle(data);
+      System.out.println(Arrays.toString(data));
+    } catch (IOException | IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+    }
 
   }
 
@@ -43,8 +48,10 @@ public class Main {
     String input;
     try {
       while ((input = buffer.readLine()) != null){
-        int value = Integer.parseInt(input.strip());//Strip remove spaces
-        data.add(value);
+        input = input.strip(); //Strip remove spaces
+        if(!input.isEmpty()) {
+          data.add(Integer.parseInt(input));
+        }
       }
     } catch (NumberFormatException e) {
       System.err.printf("Parsing failed %s%n", e.getMessage());
